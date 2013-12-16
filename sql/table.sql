@@ -11,7 +11,7 @@ CREATE TABLE `types` (
 DROP TABLE IF EXISTS `employees`;
 
 CREATE TABLE `employees` (
-	`employee_id` int(8)  NOT NULL ,
+	`employee_id` int(8)  NOT NULL,
 	`name` varchar(15) NOT NULL,
 	`password` varchar(100) NOT NULL,
 	`bank_account` bigint(20) unsigned NOT NULL,
@@ -26,7 +26,7 @@ CREATE TABLE `employees` (
 DROP TABLE IF EXISTS `timecards`;
 
 CREATE TABLE `timecards` (
-	`timecard_id` int(10)  NOT NULL ,
+	`timecard_id` int(10)  NOT NULL AUTO_INCREMENT,
 	`start_time` datetime NOT NULL,
 	`end_time` datetime NOT NULL,
 	`submitted` boolean NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE `timecards` (
 DROP TABLE IF EXISTS `projects`;
 
 CREATE TABLE `projects` (
-	`project_id` int(8)  NOT NULL,
+	`project_id` int(8)  NOT NULL AUTO_INCREMENT,
 	`name` varchar(30) NOT NULL,
 	PRIMARY KEY (`project_id`)
 );
@@ -55,3 +55,17 @@ CREATE TABLE `dayworks` (
 	FOREIGN KEY (`timecard_id`) references timecards(timecard_id),
 	FOREIGN KEY (`project_id`) references projects(project_id)
 );
+
+
+
+
+
+create table `print`(
+	name varchar(15) not null,
+	employee_id int(8),
+	position varchar(20) not null,
+	wage int(4) not null,
+	bank_account bigint(20) unsigned not null,
+	PRIMARY KEY(employee_id)
+);
+

@@ -1,0 +1,29 @@
+.workstuff {
+	width: 320px;
+	height: 300px;
+	float: left;
+}
+
+.welcome {
+	font-size: 31.5px;
+	margin: 30px 20px 20px 0;
+	line-height: 40px;
+	font-family: inherit;
+	font-weight: bold;
+	color: inherit;
+	text-rendering: optimizelegibility;
+}
+
+.management {
+	font-size: 1.5em;
+}
+
+.logout {
+	margin-left: 5px;
+	font-size: 1.05em;
+}
+
+.submit-timecard {
+	float: right;
+	margin-right: 30px;
+}

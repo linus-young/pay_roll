@@ -30,7 +30,7 @@ class VerifyLogin extends CI_Controller {
 				}
 				if( $is_admin== 1 )
 				{
-					redirect('admin_control', 'refresh');
+					redirect('admin_control/user_management', 'refresh');
 				}
 			}
 		}

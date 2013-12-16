@@ -23,7 +23,7 @@
 		<label for="name">Name</label>
 		<input type="text" size="20" id="name" name="name" class="input-block-level"/>
 		
-		<label for="password">Pass</label>
+		<label for="password">Password</label>
 		<input type="password" size="20" id="passowrd" name="password" class="input-block-level"/>
 		
 		<button class="btn btn-large btn-primary" type="submit">&nbsp;&nbsp;Login&nbsp;&nbsp;</button> &nbsp;&nbsp;

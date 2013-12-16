@@ -3,59 +3,48 @@
 <head>
 	<meta charset="utf-8" />
 
-	<link href="<?php echo base_url('assets/css/bootstrap.css') ?>" rel="stylesheet" type="text/css" >
-	<link href="<?php echo base_url('assets/css/bootstrap-responsive.css') ?>" rel="stylesheet" type="text/css">
-	<link href="<?php echo base_url('assets/css/login.css') ?>" rel="stylesheet" type="text/css">
+	<?php 
+	foreach($css_files as $file): ?>
+		<link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
+	<?php endforeach; ?>
+	<?php foreach($js_files as $file): ?>
+		<script src="<?php echo $file; ?>"></script>
+	<?php endforeach; ?>
 
-<?php 
-foreach($css_files as $file): ?>
-	<link type="text/css" rel="stylesheet" href="<?php echo $file; ?>" />
-<?php endforeach; ?>
-<?php foreach($js_files as $file): ?>
-	<script src="<?php echo $file; ?>"></script>
-<?php endforeach; ?>
-<style type='text/css'>
-body
-{
-	font-family: Arial;
-	font-size: 14px;
-}
-a {
-    color: blue;
-    text-decoration: none;
-    font-size: 14px;
-}
-a:hover
-{
-	text-decoration: underline;
-}
-</style>
+	<link href="<?php echo base_url('assets/css/custom.css') ?>" rel="stylesheet" type="text/css">
+
 </head>
 <body>
-	<a href='<?php echo site_url('admin_control/user_management')?>'>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		welcome admin 
-	</a>
-	<br></br>
+	<div style="margin-left: 30px">
+		<h2 class="welcome">Welcome admin!</h2>
+		<a href='<?php echo site_url('admin_control/logout_management')?>' class="logout">
+			Logout
+		</a>
+		<br></br>
+		
+		<div>
+			<a href='<?php echo site_url('admin_control/user_management')?>' class="management">&nbsp;User&nbsp;</a>&nbsp;&nbsp;
+			<a href='<?php echo site_url('admin_control/project_management')?>' class="management">&nbsp;Project&nbsp;</a>&nbsp;&nbsp;
+			<a href='<?php echo site_url('admin_control/timecard_management')?>' class="management">&nbsp;Timecard&nbsp;</a>&nbsp;&nbsp;
+			<a href='<?php echo site_url('admin_control/this_week_timecard_management')?>' class="management">&nbsp;This Week&nbsp;</a>&nbsp;&nbsp;
+			<a href='<?php echo site_url('admin_control/print_management')?>' class="management">&nbsp;Pay Roll&nbsp;</a>
 
-	<a href='<?php echo site_url('admin_control/logout_management')?>'>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-		Logout
-	</a>
-	<br></br>
-	
-	<div>&nbsp;&nbsp;
-		<a class="btn btn-large btn-primary" href='<?php echo site_url('admin_control/user_management')?>'>&nbsp;User&nbsp;</a>&nbsp;&nbsp;
-		<a class="btn btn-large btn-primary" href='<?php echo site_url('admin_control/project_management')?>'>&nbsp;Project&nbsp;</a>&nbsp;&nbsp;
-		<a class="btn btn-large btn-primary" href='<?php echo site_url('admin_control/timecard_management')?>'>&nbsp;Timecard&nbsp;</a>
+			<?php
+				$current_uri =  $this->uri->uri_string();
+				// judge where you are in timecard employment page.
+				if(strpos($current_uri, 'this_week') !== false) {
+					echo form_open('admin_control/print_management');
+				?>
+					<button class="btn btn-primary btn-large submit-timecard">Submit This Week</button>
+				<?php 
+				}
+			?>
+		</div>
 	</div>
-	<div style='height:20px;'></div>  
+	<div style='height:10px;'></div>  
     <div>
 		<?php echo $output; ?>
     </div>
-
-    <script src="<?php echo base_url('assets/js/jquery.js') ?>" type="text/javascript"></script>
-    <script src="<?php echo base_url('assets/js/bootstrap.js') ?>" type="text/javascript"></script>
-
+	
 </body>
 </html>

@@ -16,6 +16,11 @@ class Home extends CI_Controller {
 			$is_admin = $session_data['is_admin'];
 			$data['name'] = $session_data['name'];
 
+			// Init some information
+			$data['confirm_project'] = FALSE;
+			$data['start_work']		 = FALSE;
+			$data['stop_work']		 = FALSE;
+
 			$result = $this->project->get_all_project_name();
 			$data['project_list'] = $result;
 			$this->load->view('home_view', $data);
