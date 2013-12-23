@@ -33,7 +33,7 @@
 				$current_uri =  $this->uri->uri_string();
 				// judge where you are in timecard employment page.
 				if(strpos($current_uri, 'this_week') !== false) {
-					echo form_open('admin_control/print_management');
+					echo form_open('admin_control/this_week_timecard_management');
 				?>
 					<button class="btn btn-primary btn-large submit-timecard">Submit This Week</button>
 				<?php 

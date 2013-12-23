@@ -8,7 +8,7 @@ class Admin_Control extends CI_Controller {
 		$this->load->database();
 		$this->load->helper('url');
 		$this->load->library('grocery_CRUD');
-		/*$this->output->enable_profiler(TRUE);*/
+		$this->output->enable_profiler(TRUE);
 	}
 
 	function index()
@@ -32,8 +32,9 @@ class Admin_Control extends CI_Controller {
 				$output = $crud->render();
 
 				$this->_example_output($output);
-			} else {
-				echo "permission denied";
+			} 
+			else {
+				echo "permission denied, please login as admin";
 			}
 		}
 		else {
@@ -58,7 +59,7 @@ class Admin_Control extends CI_Controller {
 
 				$this->_example_output($output);
 			} else {
-				echo "permission denied";
+				echo "permission denied, please login as admin";
 			}
 		}
 		else {
@@ -90,7 +91,7 @@ class Admin_Control extends CI_Controller {
 				$this->_example_output($output);
 			} 
 			else {
-				echo "permission denied";
+				echo "permission denied, please login as admin";
 			}
 		}
 		else {
@@ -104,43 +105,82 @@ class Admin_Control extends CI_Controller {
 			$session_data = $this->session->userdata('logged_in');
 			$is_admin = $session_data['is_admin'];
 			if( $is_admin==1 ) {
+
+
 				$crud = new grocery_CRUD();
 				$crud->set_theme('twitter-bootstrap');
 
 				$crud->set_table('timecards');
-				// get this week range.
-
-				// wrong example
-				// $today = getdate();
-				// print_r($today);
-				// $weekStartDate = $today['mday'] - $today['wday'];
-   				// $weekEndDate = $today['mday'] - $today['wday'] + 6;
-   				// echo "week end date:".$weekEndDate;
-				//$crud->where('start_time >=', $weekStartDate);
-				//$crud->where('start_time <=', $weekEndDate);
-
 
 				$crud->columns('timecard_id','start_time',
 					'end_time', 'submitted', 'paid');
-				$crud->required_fields('start_time',
-					'end_time', 'submitted', 'paid');
 				$crud->set_rules('start_time', 'Start Time', 'datetime');
 				$crud->set_rules('end_time', 'Stop Time', 'datetime');
-				// timecard cannot be created by admin but can be crud by DBA.
-				$crud->unset_add();
+
+				if($_POST) {
+					$crud->where('submitted', 'inactive');
+					$crud->callback_column('submitted', array($this, '_callback_submitted'));
+					$crud->unset_operations();
+				}
+				else {
+					$crud->required_fields('start_time',
+						'end_time', 'submitted', 'paid');
+					
+					$crud->unset_add();
+				}
+				
 				
 				$output = $crud->render();
 
 				$this->_example_output($output);
 			} 
 			else {
-				echo "permission denied";
+				echo "permission denied, please login as admin";
 			}
 		}
 		else {
 			redirect('login', 'refresh');
 		}
 	}
+
+	public function _callback_submitted($value, $row)
+	{
+		return 1;
+	}
+
+	// public function submit_this_week_timecard()
+	// {
+	// 	if($this->session->userdata('logged_in')) {
+	// 		$session_data = $this->session->userdata('logged_in');
+	// 		$is_admin = $session_data['is_admin'];
+	// 		if( $is_admin==1 ) {
+	// 			$crud = new grocery_CRUD();
+	// 			$crud->set_theme('twitter-bootstrap');
+	// 			$crud->where('submitted', 'inactive');
+
+	// 			$crud->set_table('timecards');
+	// 			$crud->columns('timecard_id','start_time',
+	// 				'end_time', 'submitted', 'paid');
+	// 			$crud->change_field_type('submitted', 'hidden', 'active');
+	// 			$crud->set_rules('start_time', 'Start Time', 'datetime');
+	// 			$crud->set_rules('end_time', 'Stop Time', 'datetime');
+
+	// 			//$crud->unset_add();
+	// 			$crud->unset_operations();
+
+	// 			$output = $crud->render();
+
+	// 			$this->_example_output($output);
+	// 		}
+	// 		else {
+	// 			echo "permission denied, please login as admin";
+	// 		}
+	// 	}
+	// 	else {
+	// 		redirect('login', 'refresh');
+	// 	}
+
+	// }
 
 
 	public function print_management()
